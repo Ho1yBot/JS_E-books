@@ -1,14 +1,10 @@
 'use strict';
 
-let weatherMap = new Map ([
-    ["London", 10],
-    ["Moscow", 7],
-    ["Paris", 14]
-]);
+// Написать функцию, которая принимает min и max 
+// и возвращает случайное целое число между ними, вкл их
 
-let arrWeater = [...weatherMap];
-arrWeater = arrWeater.map(([key, value]) =>{
-    return [value, key]
-}) 
-weatherMap = new Map(arrWeater);
-console.log(weatherMap);
+function random(min, max) {
+  return Math.floor(Math.random() * (max-min+1) + min);
+}
+
+console.log(random(3, 10));
