@@ -1,21 +1,26 @@
 'use strict';
 
-function convertCurrency(sum, from, to) {
-  const allCurrency = [
-    { name: "USD", mult: 1 },
-    { name: "RUB", mult: 1 / 60 },
-    { name: "EUR", mult: 1.1},
-  ]
-  const fromExist = allCurrency.find(c => c.name === from);
-  if (!fromExist){
-    return null
+function timePizza(ms) {
+  const option = {
+    second: "numeric",
+    minute: "numeric"
   }
-  const toExist = allCurrency.find(c => c.name === to);
-  if (!toExist){
-    return null
-  }
-  
-  return new Intl.NumberFormat("ru-RU", {style: "currency", currency: to}).format(sum * fromExist.mult / toExist.mult)
+
+  const interval = setInterval(() => {
+    if (ms > 0) {
+      console.log(new Intl.DateTimeFormat(navigator.language, option)
+        .format(ms));
+      ms = ms - 1000
+    }
+
+  }, 1000);
+
+  setTimeout(() => {
+    clearInterval(interval)
+    console.log("PIZZA");
+  }, ms + 1000);
 }
 
-console.log(convertCurrency(100, "RUB", "USD")); 
+timePizza(5000)
+
+
