@@ -1,26 +1,49 @@
 'use strict';
+const product = { id: 1, name: "Bread", count: 1 };
 
-function timePizza(ms) {
-  const option = {
-    second: "numeric",
-    minute: "numeric"
-  }
-
-  const interval = setInterval(() => {
-    if (ms > 0) {
-      console.log(new Intl.DateTimeFormat(navigator.language, option)
-        .format(ms));
-      ms = ms - 1000
-    }
-
-  }, 1000);
-
-  setTimeout(() => {
-    clearInterval(interval)
-    console.log("PIZZA");
-  }, ms + 1000);
+const Cart = function () {
+  this.products = [];
 }
 
-timePizza(5000)
+Cart.prototype.addGood = function (product) {
+  if (this.products.find(good => good.id === product.id)) {
+    return;
+  }
+  this.products.push(product);
+}
+
+Cart.prototype.increaseCount = function (id) {
+  this.products = this.products.map((product) => {
+    if (product.id == id) {
+      product.count++
+      return product
+    }
+    return product
+  })
+}
+
+Cart.prototype.decreaseCount = function (id) {
+  this.products = this.products
+    .map((product) => {
+      if (product.id == id) {
+        product.count--
+        return product
+      }
+      return product
+    })
+    .filter((product)=> product.count > 0);
+}
+
+const cart1 = new Cart(product)
+cart1.addGood(product);
+cart1.increaseCount(1);
+cart1.decreaseCount(1);
+
+const cart2 = new Cart(product)
+cart2.addGood({id: 2, name: "Ham", count: 2})
+
+console.log(cart1);
+console.log(cart2);
+
 
 
