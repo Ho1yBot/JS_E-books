@@ -1,49 +1,44 @@
-'use strict';
-const product = { id: 1, name: "Bread", count: 1 };
+"use strict"
 
-const Cart = function () {
-  this.products = [];
-}
+class User {
+  #login;
+  #_password;
+  constructor(login, password) {
+    this.#login = login;
+    this.#password = password;
+  };
 
-Cart.prototype.addGood = function (product) {
-  if (this.products.find(good => good.id === product.id)) {
-    return;
+  set #password(pass) {
+    this.#_password = pass.split("").reverse().join("");
   }
-  this.products.push(product);
-}
 
-Cart.prototype.increaseCount = function (id) {
-  this.products = this.products.map((product) => {
-    if (product.id == id) {
-      product.count++
-      return product
+  get #password() {
+    this.#_password = pass.split("").reverse().join("");
+  }
+  
+
+  get loginUser() {
+    return this.#login;
+  };
+
+  checkPassword(checkingPassword) {
+    return checkingPassword === this.password
+  }
+
+  changePassword(oldPassword, newPassword) {
+    if (!this.checkPassword(oldPassword)){
+      return false
     }
-    return product
-  })
+    else {
+      this.#password = newPassword
+      return true;
+    }
+  }
 }
 
-Cart.prototype.decreaseCount = function (id) {
-  this.products = this.products
-    .map((product) => {
-      if (product.id == id) {
-        product.count--
-        return product
-      }
-      return product
-    })
-    .filter((product)=> product.count > 0);
-}
+const user1 = new User('user', "123");
 
-const cart1 = new Cart(product)
-cart1.addGood(product);
-cart1.increaseCount(1);
-cart1.decreaseCount(1);
-
-const cart2 = new Cart(product)
-cart2.addGood({id: 2, name: "Ham", count: 2})
-
-console.log(cart1);
-console.log(cart2);
-
-
-
+console.log(user1.loginUser); 
+user1.changePassword(1235, 3210)
+console.log(user1);
+user1.checkPassword = 1234;
