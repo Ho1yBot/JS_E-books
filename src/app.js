@@ -1,44 +1,52 @@
 "use strict"
 
-class User {
-  #login;
-  #_password;
-  constructor(login, password) {
-    this.#login = login;
-    this.#password = password;
+class Enemy {
+  constructor(health) {
+    this.health = health
   };
 
-  set #password(pass) {
-    this.#_password = pass.split("").reverse().join("");
-  }
-
-  get #password() {
-    this.#_password = pass.split("").reverse().join("");
-  }
-  
-
-  get loginUser() {
-    return this.#login;
-  };
-
-  checkPassword(checkingPassword) {
-    return checkingPassword === this.password
-  }
-
-  changePassword(oldPassword, newPassword) {
-    if (!this.checkPassword(oldPassword)){
-      return false
+  recieveDamage(damage){
+    if (this.hitPoint <= 0) {
+      return console.log("Enemy is killed");
     }
-    else {
-      this.#password = newPassword
-      return true;
+    this.health = this.health - damage
+  }
+
+}
+
+class Sword{
+  #damage
+  constructor(damage){
+    this.#damage = damage
+  }
+
+  strike(enemy) {
+    enemy.recieveDamage(this.#damage)
+  }
+
+}
+
+class Orc extends Enemy {
+  constructor(health) {
+    super(health)
+  };
+
+  recieveDamage(damage){
+    if(Math.random()*100 < 50){
+      return console.log("miss");
+    } else {
+      this.health = this.health - damage
+    }
+    if (this.health <= 0) {
+      this.health = 0
+      return console.log("Enemy is killed");
     }
   }
 }
 
-const user1 = new User('user', "123");
-
-console.log(user1.loginUser); 
-user1.changePassword(1235, 3210)
-console.log(user1);
-user1.checkPassword = 1234;
+const orkLoh = new Orc (100);
+const sword = new Sword (40)
+console.log(orkLoh);
+sword.strike(orkLoh)
+sword.strike(orkLoh)
+console.log(orkLoh);
