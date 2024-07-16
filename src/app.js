@@ -1,19 +1,20 @@
 "use strict"
 
-const request = new XMLHttpRequest();
-let number = 1;
-let id = 1
+function createSelect(array) {
+  const el = document.querySelector('.filter');
+  el.innerHTML = `<select>
+    ${array.map(arrEl => `<option value=${arrEl.slug}>${arrEl.slug}</option>`)}
+  </select>`;
+}
 
-request.open("GET", "https://dummyjson.com/products/" );
-request.send();
+function getCategories() {
+  fetch('https://dummyjson.com/products/categories')
+    .then(response => response.json())
+    .then(data => createSelect(data))
+    .catch(error => console.error(`Ошибка: ${error}`));
+}
 
-request.addEventListener("load", function () {
-  const data = JSON.parse(this.responseText)
-  const sum = data.products.reduce((acc, product) => {
-    acc = acc + product.price
-    return acc
-  }, 0)
-  console.log(sum/data.products.length);
-})
+getCategories();
+
 
 
