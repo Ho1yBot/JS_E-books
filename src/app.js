@@ -1,20 +1,27 @@
 "use strict"
-
-function createSelect(array) {
-  const el = document.querySelector('.filter');
-  el.innerHTML = `<select>
-    ${array.map(arrEl => `<option value=${arrEl.slug}>${arrEl.slug}</option>`)}
-  </select>`;
+function getDataOrErrorText(url, errorText) {
+  return fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(errorText);
+      }
+    })
 }
 
-function getCategories() {
-  fetch('https://dummyjson.com/products/categories')
-    .then(response => response.json())
-    .then(data => createSelect(data))
-    .catch(error => console.error(`Ошибка: ${error}`));
-}
+getDataOrErrorText("https://dummyjson.com/products", "Can not get products")
+  .then(({ products }) => {
+    return getDataOrErrorText("https://dummyjson.com/products/" + products[0].id, "Can not get products")
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    const el = document.querySelector(".filter")
+    el.innerHTML = error.message
+  })
 
-getCategories();
 
 
 
