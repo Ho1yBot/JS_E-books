@@ -1,46 +1,22 @@
 "use strict";
 
-function getMyCoordinates() {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        resolve({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-        });
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
+async function generateActivity() {
+  const res = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+  return await res.json()
 }
 
-async function getMyPlace() {
-  try {
-    const { latitude, longitude } = await getMyCoordinates();
-    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`);
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    const data = await response.json();
-    console.log(data.city);
-  } catch (err) {
-    console.error(err);
+const wrapper = document.querySelector(".wrapper")
+async function getActivity() {
+  wrapper.innerHTML = "";
+  const activities = await Promise.all([
+    generateActivity(),
+    generateActivity(),
+    generateActivity()
+  ])
+  console.log(activities);
+  for (let i = 0; i < activities.length; i++){
+    const el = document.createElement("div");
+    el.innerHTML = `<div>${activities[i].deck_id}</div>`
+    wrapper.appendChild(el)
   }
 }
-
-getMyPlace();
-
-// function getMyCoordinates() {
-
-//   navigator.geolocation.getCurrentPosition(
-//     (position) => {
-
-//       console.log(position)
-//     }
-//   );
-
-// }
-
-// getMyCoordinates()
