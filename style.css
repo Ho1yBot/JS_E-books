@@ -4,3 +4,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.yellow{
+    background-color: yellow;
+    color: black;
+}

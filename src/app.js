@@ -1,22 +1,20 @@
 "use strict";
-
-async function generateActivity() {
-  const res = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-  return await res.json()
+const item = document.querySelector(".items")
+for (let i = 0; i < 5; i++) {
+  const p = document.createElement("p")
+  p.innerHTML = `${i * 23}`
+  item.append(p)
 }
+console.log([...item.children][0].innerHTML);
 
-const wrapper = document.querySelector(".wrapper")
-async function getActivity() {
-  wrapper.innerHTML = "";
-  const activities = await Promise.all([
-    generateActivity(),
-    generateActivity(),
-    generateActivity()
-  ])
-  console.log(activities);
-  for (let i = 0; i < activities.length; i++){
-    const el = document.createElement("div");
-    el.innerHTML = `<div>${activities[i].deck_id}</div>`
-    wrapper.appendChild(el)
+const input = document.querySelector(".input")
+input.addEventListener("change", function onchange(e) {
+  for (const el of [...item.children]) {
+    if (el.innerHTML.includes(e.target.value)) {
+      el.classList.add("yellow")
+      continue
+    } else {
+      el.classList.remove("yellow")
+    }
   }
-}
+})
