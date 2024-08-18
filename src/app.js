@@ -1,20 +1,26 @@
-"use strict";
-const item = document.querySelector(".items")
-for (let i = 0; i < 5; i++) {
-  const p = document.createElement("p")
-  p.innerHTML = `${i * 23}`
-  item.append(p)
-}
-console.log([...item.children][0].innerHTML);
+import { MainView } from "../views/main/main";
 
-const input = document.querySelector(".input")
-input.addEventListener("change", function onchange(e) {
-  for (const el of [...item.children]) {
-    if (el.innerHTML.includes(e.target.value)) {
-      el.classList.add("yellow")
-      continue
-    } else {
-      el.classList.remove("yellow")
+class App {
+    routes = [ 
+        {path: "", view: MainView}
+    ];
+    appState = {
+        favorites: [],
+    };
+
+    constructor() {
+        window.addEventListener("hashchange", this.route.bind(this));
+        this.route();
     }
-  }
-})
+
+    route() {
+        if (this.currentView){
+            this.currentView.destroy()
+        }
+        const view = this.routes.find(r => r.path == location.hash).view
+        this.currentView = new view(this.appState);
+        this.currentView.render()
+    }
+}
+
+new App
