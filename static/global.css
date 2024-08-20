@@ -7,6 +7,10 @@ a {
     color: var(--black);
 }
 
+button{
+    cursor: pointer;
+}
+
 :root {
     --black: #121212;
     --white: #fafafa
