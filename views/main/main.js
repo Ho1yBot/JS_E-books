@@ -2,11 +2,12 @@ import { AbstractView } from "../../src/common/view.js";
 import onChange from "on-change";
 import { Header } from "../../src/components/header/header.js";
 import { Search } from "../../src/components/search/search.js";
+import { CardList } from "../../src/components/card-list/card-list.js";
 
 export class MainView extends AbstractView {
     state = {
         list: [],
-        laoding: false,
+        loading: false,
         searchQuery: undefined,
         offset: 0
     }
@@ -19,17 +20,21 @@ export class MainView extends AbstractView {
     }
 
     appStateHook(path) {
-        if (path === "favorites"){
+        if (path === "favorites") {
             console.log(path);
         }
     };
-    async stateHook(path){
-        if (path === "searchQuery"){
-            this.state.laoding = true;
+    async stateHook(path) {
+        if (path === "searchQuery") {
+            this.state.loading = true;
             const data = await this.loadList(this.state.searchQuery, this.state.offset)
-            this.state.laoding = false;
+            this.state.loading = false;
             console.log(data);
             this.state.list = data.docs
+        }
+        
+        if (path === "list" || path === "loading"){
+            this.render()
         }
     }
 
@@ -41,12 +46,13 @@ export class MainView extends AbstractView {
     render() {
         const main = document.createElement("div");
         main.append(new Search(this.state).render())
+        main.append(new CardList(this.appState, this.state).render())
         this.app.innerHTML = "";
         this.app.append(main);
         this.renderHeader();
     }
 
-    renderHeader(){
+    renderHeader() {
         const header = new Header(this.appState).render();
         this.app.prepend(header);
     }
