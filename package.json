@@ -10,7 +10,7 @@
     "build": "rollup -c --watch",
     "build:prod": "rollup -c",
     "predeploy": "npm run build:prod",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d ."
   },
   "repository": {
     "type": "git",
