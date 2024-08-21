@@ -1167,10 +1167,10 @@
                 class="search__input"
                 value="${this.state.searchQuery ? this.state.searchQuery : ""}"
             />
-            <img src="../../static/search.svg" alt="Иконка поиска"/>
+            <img src="./static/search.svg" alt="Иконка поиска"/>
         </div>
         <button aria-label="Искать">
-            <img src="/JS_E-books/static/search-white.svg" alt="Иконка поиска"/>
+            <img src="../../static/search-white.svg" alt="Иконка поиска"/>
         </button>
         `;
             this.el.querySelector("button").addEventListener("click", this.search.bind(this));
@@ -1190,10 +1190,18 @@
             this.cardState = cardState;
         }
 
+        #addToFavorites() {
+            this.appState.favorites.push(this.cardState);
+        }
+
+        #deleteFromFavorites() {
+            this.appState.favorites = this.appState.favorites.filter(book => book.key !== this.cardState.key);
+        }
+
         render() {
             this.el.classList.add("card");
-            const existFavorites = this.appState.favorites.find(
-                b => b.key == this.cardState.key
+            const existInFavorites = this.appState.favorites.find(
+                book => book.key == this.cardState.key
             );
             this.el.innerHTML = `
             <div class="card__image"> 
@@ -1207,18 +1215,22 @@
                     ${this.cardState.title}
                 </div>
                 <div class="card__author">
-                    ${this.cardState.author_name ? this.cardState.author_name[0] : "Незадано"}
+                    ${this.cardState.author_name ? this.cardState.author_name[0] : "Не задано"}
                  </div>
                 <div class="card__footer">
-                    <button class="button_add ${existFavorites ? "buttom__active" : ""}">
-                         ${existFavorites 
-                            ? "<img src='../../static/favorites.svg' />" 
-                            : "<img src='../../static/favorites-white.svg' />" }
+                    <button class="button__add ${existInFavorites ? "button__active" : ""}">
+                         ${existInFavorites
+                        ? "<img src='../../static/favorites.svg' />"
+                        : "<img src='../../static/favorites-white.svg' />"}
                     </button>
                  </div>
-
             </div>
         `;
+            if (existInFavorites) {
+                this.el.querySelector('button').addEventListener("click", this.#deleteFromFavorites.bind(this));
+            } else {
+                this.el.querySelector('button').addEventListener("click", this.#addToFavorites.bind(this));
+            }
             return this.el
         }
     }
@@ -1263,7 +1275,7 @@
 
         appStateHook(path) {
             if (path === "favorites") {
-                console.log(path);
+                this.render();
             }
         };
         async stateHook(path) {
@@ -1271,7 +1283,6 @@
                 this.state.loading = true;
                 const data = await this.loadList(this.state.searchQuery, this.state.offset);
                 this.state.loading = false;
-                console.log(data);
                 this.state.numFound = data.numFound;
                 this.state.list = data.docs;
             }
