@@ -1,0 +1,22 @@
+body{
+    font-family: "Open Sans", sans-serif;
+    color: var(--black);
+}
+
+a {
+    color: var(--black);
+}
+
+button{
+    cursor: pointer;
+}
+
+:root {
+    --black: #121212;
+    --white: #fafafa
+}
+
+#root {
+    max-width: 800px;
+    margin: 0 auto;
+}

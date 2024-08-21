@@ -1170,7 +1170,7 @@
             <img src="../../static/search.svg" alt="Иконка поиска"/>
         </div>
         <button aria-label="Искать">
-            <img src="../../static/search-white.svg" alt="Иконка поиска"/>
+            <img src="/JS_E-books/static/search-white.svg" alt="Иконка поиска"/>
         </button>
         `;
             this.el.querySelector("button").addEventListener("click", this.search.bind(this));
