@@ -1,0 +1,37 @@
+{
+  "name": "book-app",
+  "version": "1.0.0",
+  "description": "E-book-app_vanilla_JS",
+  "homepage": "https://github.com/Ho1yBot/JS_E-books.git",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "live-server",
+    "build": "rollup -c --watch",
+    "build:prod": "rollup -c",
+    "predeploy": "npm run build:prod",
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ho1yBot/JS_E-books.git"
+  },
+  "keywords": [
+    "books"
+  ],
+  "author": "Svyatoslav Pozolotin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.4",
+    "on-change": "^5.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "eslint": "^9.9.0",
+    "gh-pages": "^6.1.1",
+    "globals": "^15.9.0",
+    "rollup": "^4.20.0",
+    "rollup-plugin-import-css": "^3.5.1"
+  }
+}
