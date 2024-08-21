@@ -32,6 +32,7 @@
     "gh-pages": "^6.1.1",
     "globals": "^15.9.0",
     "rollup": "^4.20.0",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-import-css": "^3.5.1"
   }
 }
