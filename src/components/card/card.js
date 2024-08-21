@@ -30,8 +30,8 @@ export class Card extends DivComponent {
                 <div class="card__footer">
                     <button class="button_add ${existFavorites ? "buttom__active" : ""}">
                          ${existFavorites 
-                            ? "<img src='./static/favorites.svg' />" 
-                            : "<img src='./static/favorites-white.svg' />" }
+                            ? "<img src='../../static/favorites.svg' />" 
+                            : "<img src='../../static/favorites-white.svg' />" }
                     </button>
                  </div>
 
