@@ -1,8 +1,8 @@
 import { DivComponent } from "../../common/div-component";
 import "./header.css"
 
-export class Header extends DivComponent{
-    constructor(appState){
+export class Header extends DivComponent {
+    constructor(appState) {
         super();
         this.appState = appState;
     }
@@ -11,7 +11,9 @@ export class Header extends DivComponent{
         this.el.classList.add("header");
         this.el.innerHTML = `
         <div>
-            <img src="./static/logo.svg" alt="Логотип" />
+            <a class="menu__item" href="#">
+                <img src="./static/logo.svg" alt="Логотип" />
+            </a>
         </div>
         <div class="menu">
             <a class="menu__item" href="#">
@@ -27,6 +29,6 @@ export class Header extends DivComponent{
             </a>
         </div>
         `
-        return this.el 
+        return this.el
     }
 }

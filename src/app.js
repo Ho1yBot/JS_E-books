@@ -1,8 +1,10 @@
+import { FavoritesView } from "../views/favorites/favorites";
 import { MainView } from "../views/main/main";
 
 class App {
-    routes = [ 
-        {path: "", view: MainView}
+    routes = [
+        { path: "", view: MainView },
+        { path: "#favorites", view: FavoritesView }
     ];
     appState = {
         favorites: [],
@@ -14,7 +16,7 @@ class App {
     }
 
     route() {
-        if (this.currentView){
+        if (this.currentView) {
             this.currentView.destroy()
         }
         const view = this.routes.find(r => r.path == location.hash).view
@@ -24,3 +26,4 @@ class App {
 }
 
 new App
+

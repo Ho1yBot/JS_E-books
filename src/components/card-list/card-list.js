@@ -7,18 +7,39 @@ export class CardList extends DivComponent {
         super();
         this.appState = appState;
         this.parentState = parentState;
+        
     }
 
+    loadData() {
+        const listString = localStorage.getItem(this.FAVORITES_LIST);
+        const listArray = JSON.parse(listString);
+        if (Array.isArray(listArray)) {
+            this.appState.favorites = listArray
+        }
+        console.log(this.appState.favorites);
+    }
+
+    FAVORITES_LIST = "FAVORITES_LIST"
+
+
+    saveData() {
+        localStorage.setItem(this.FAVORITES_LIST, JSON.stringify(this.appState.favorites))
+    }
+
+
     render() {
-        if (this.parentState.loading){
+        if (this.parentState.loading) {
             this.el.innerHTML = "<div class='card_list__loader'>Loading...</div>"
 
             return this.el
         }
-        this.el.classList.add("card_list");
-        this.el.innerHTML = `<h1>Найдено книг - ${this.parentState.numFound}</h1>`
-        for (const card of this.parentState.list){
-            this.el.append(new Card(this.appState, card).render())
+        console.log(this.appState.favorites);
+        this.saveData()
+        const cardGrid = document.createElement("div")
+        cardGrid.classList.add("card_grid");
+        this.el.append(cardGrid)
+        for (const card of this.parentState.list) {
+            cardGrid.append(new Card(this.appState, card).render())
         }
         return this.el
     }
