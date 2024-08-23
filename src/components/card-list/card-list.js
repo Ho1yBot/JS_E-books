@@ -7,7 +7,6 @@ export class CardList extends DivComponent {
         super();
         this.appState = appState;
         this.parentState = parentState;
-        
     }
 
     loadData() {
